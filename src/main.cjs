@@ -36,7 +36,9 @@ function createWindow() {
 
 function narratorWorker() {
   if (!worker) {
-    worker = new Worker(path.join(__dirname, 'narrator-worker.mjs'));
+    worker = new Worker(path.join(__dirname, 'narrator-worker.mjs'), {
+      workerData: { modelCacheDir: path.join(app.getPath('userData'), 'model-cache') }
+    });
     worker.on('exit', () => { worker = undefined; });
   }
   return worker;

@@ -1,9 +1,13 @@
-import { parentPort } from 'node:worker_threads';
+import { parentPort, workerData } from 'node:worker_threads';
 import { spawn } from 'node:child_process';
 import { rename, rm } from 'node:fs/promises';
 import { once } from 'node:events';
-import { KokoroTTS } from 'kokoro-js';
+import { env } from '@huggingface/transformers';
 import { speechChunks } from './speech.mjs';
+
+// ONNX Runtime needs an ordinary filesystem path; models cannot be loaded from app.asar.
+env.cacheDir = workerData.modelCacheDir;
+const { KokoroTTS } = await import('kokoro-js');
 
 let model;
 const sampleRate = 24000;

@@ -28,7 +28,7 @@ Extract the entire ZIP before running it. These are portable folders, not instal
 2. Extract the Windows ZIP to a folder. Keep its contents together, then run `MarkdownPodcastNarrator.exe`.
 3. Set up a writing provider if you want a generated conversation. Single-narrator mode does not need one.
 
-The first narration downloads the quantized Kokoro-82M voice model and caches it locally. You need an internet connection for that first download. Narration runs on your CPU; long episodes take time, and playback begins after the complete MP3 has been saved.
+The first narration downloads the quantized Kokoro-82M voice model and caches it in the app's user data folder, outside the packaged app. You need an internet connection for that first download. The cache stays available across app updates. Narration runs on your CPU; long episodes take time, and playback begins after the complete MP3 has been saved.
 
 ## Choose a writing provider
 
