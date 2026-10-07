@@ -1,0 +1,30 @@
+{
+  "name": "markdown-podcast-narrator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local two-host podcast drafting and Markdown-to-MP3 narration",
+  "main": "src/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test",
+    "build:mac": "node scripts/build-mac.mjs",
+    "build:windows": "node scripts/build-windows.mjs",
+    "build:release": "node scripts/build-release.mjs"
+  },
+  "dependencies": {
+    "kokoro-js": "1.2.1"
+  },
+  "devDependencies": {
+    "@anthropic-ai/claude-code": "^2.1.197",
+    "electron": "^41.0.0",
+    "electron-builder": "^26.15.3"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nascarjake/markdown-podcast-narrator.git"
+  }
+}

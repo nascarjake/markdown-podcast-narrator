@@ -1,0 +1,4 @@
+node_modules/
+release/
+*.mp3
+.DS_Store

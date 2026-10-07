@@ -1,0 +1,40 @@
+.studio-dialog { width: min(560px, calc(100vw - 32px)); max-height: min(650px, calc(100vh - 44px)); overflow: auto; padding: 22px; color: #f3effa; background: #211b2b; border: 1px solid #5c4675; border-radius: 15px; box-shadow: 0 25px 85px #000a; }
+.studio-dialog::backdrop { background: #090710b8; backdrop-filter: blur(3px); }
+.dialog-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.dialog-head h2 { font-size: 22px; }
+.dialog-close { font-size: 22px; }
+.dialog-intro { color: #b6acbf; font-size: 12px; line-height: 1.45; }
+.recommendations { display: grid; gap: 8px; margin: 18px 0; }
+.recommendation { border: 1px solid #453652; border-radius: 9px; background: #2a2335; padding: 12px; }
+.recommendation.best { border-color: #a077dc; background: #312542; }
+.recommendation.dimmed { opacity: .58; }
+.recommendation strong { font-size: 13px; }
+.recommendation p { color: #b8aebe; font-size: 11px; line-height: 1.4; margin: 5px 0 10px; }
+.rec-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: #aa9eb9; font-size: 10px; }
+.rec-footer button { border: 1px solid #9a70d2; border-radius: 6px; background: #422e5c; color: #ead8ff; padding: 5px 9px; font-size: 10px; font-weight: 700; }
+.rec-footer button:hover { background: #604183; }
+.model-download { border-top: 1px solid #493852; padding-top: 12px; }
+.inline-input { display: flex; gap: 8px; }
+.inline-input input { flex: 1; min-width: 0; }
+#download-status { margin-bottom: 0; }
+.compact-dialog { width: min(480px, calc(100vw - 32px)); }
+#sources-list { padding-left: 17px; font-size: 12px; line-height: 1.6; }
+#research-warnings { color: #d6acc0; font-size: 11px; }
+@media (max-width: 1100px) {
+  .studio-layout { grid-template-columns: 212px minmax(315px,1fr) 235px; gap: 9px; padding: 9px; }
+  .sidebar { padding: 15px 12px; }
+  .editor-panel { padding: 17px; }
+  .model-panel { padding: 17px 13px; }
+  .model-bottom { left: 13px; right: 13px; }
+}
+@media (max-height: 740px) {
+  .sidebar { padding-top: 12px; padding-bottom: 10px; }
+  .drop-zone { height: 89px; margin-top: 9px; }
+  .side-divider { margin: 11px 0; }
+  .check-row { margin: 8px 0 6px; }
+  .field-label { margin-top: 7px; }
+  .editor-panel { padding-top: 15px; padding-bottom: 15px; }
+  .editor-header { padding-bottom: 10px; }
+  .script-label { margin-top: 10px; }
+  .editor-footer { padding-top: 10px; }
+}

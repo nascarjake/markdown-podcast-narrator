@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self' file:; connect-src 'none'">
+  <title>Markdown Podcast Narrator</title>
+  <link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="studio.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="brand"><strong>Markdown Podcast Narrator</strong><small>STUDIO</small></div>
+      <div class="topbar-spacer"></div><div class="local-badge"><i></i> Kokoro audio · local</div>
+    </header>
+    <main class="studio-layout">
+      <aside class="sidebar" aria-label="Sources and voices">
+        <div class="panel-heading"><span class="step">01</span><span>SOURCES</span></div>
+        <div id="drop-zone" class="drop-zone" tabindex="0" role="button" aria-label="Drop a Markdown or text file, or browse files"><div class="drop-icon" aria-hidden="true">↧</div><strong>Drop notes here</strong><span>Markdown or plain text</span><button id="browse" type="button" class="text-button">Browse files ↗</button></div>
+        <input id="file-input" type="file" accept=".md,.markdown,.txt,text/plain,text/markdown" hidden>
+        <p id="source-label" class="source-label">Nothing added yet</p>
+        <div class="side-divider"></div>
+        <div class="panel-heading"><span class="step">02</span><span>VOICES</span></div>
+        <label class="check-row"><input id="two-host" type="checkbox" checked><span>Two-host conversation</span></label>
+        <label class="field-label" for="voice-a">Host A</label>
+        <select id="voice-a"><option value="af_heart">Heart · Warm, American</option><option value="af_bella">Bella · Expressive, American</option><option value="am_michael">Michael · Steady, American</option><option value="bm_fable">Fable · Storytelling, British</option></select>
+        <label class="field-label" for="voice-b">Host B</label>
+        <select id="voice-b"><option value="am_michael">Michael · Steady, American</option><option value="bm_fable">Fable · Storytelling, British</option><option value="af_bella">Bella · Expressive, American</option><option value="af_heart">Heart · Warm, American</option></select>
+        <div class="side-divider"></div>
+        <div class="panel-heading"><span class="step">03</span><span>RESEARCH</span></div>
+        <div class="folder-actions"><button id="choose-folder" type="button" class="outline-button">Choose codebase folder</button><button id="clear-folder" type="button" class="text-button small-action" hidden>Clear</button></div>
+        <p id="folder-label" class="source-label">No folder selected</p>
+        <label class="check-row"><input id="wikipedia" type="checkbox"><span>Search Wikipedia</span></label>
+        <label class="field-label" for="urls">Source URLs</label>
+        <textarea id="urls" rows="2" placeholder="Paste URLs, one per line"></textarea>
+      </aside>
+      <section class="editor-panel" aria-label="Episode script">
+        <div class="editor-header"><div><span class="section-kicker">EPISODE WORKSPACE</span><strong>Script editor</strong></div><div class="editor-header-actions"><span id="word-count">0 words</span><button id="view-sources" type="button" class="text-button" hidden>Research used ↗</button></div></div>
+        <label class="field-label title-label" for="title">Episode title</label>
+        <input id="title" type="text" maxlength="80" placeholder="Give this narration a name">
+        <label class="field-label script-label" for="script">Notes or editable script</label>
+        <textarea id="script" spellcheck="true" placeholder="# Your episode title&#10;&#10;Start with a short intro.&#10;&#10;## First idea&#10;- Add a point you want to make&#10;- Add another thought&#10;&#10;Paste or drop your own notes here…"></textarea>
+        <div class="editor-footer"><span>Draft a conversation, then edit or present.</span><div class="editor-actions"><button id="draft" type="button" class="outline-button">Draft</button><button id="present" type="button" class="primary-button"><span aria-hidden="true">▶</span> Present &amp; play</button></div></div>
+      </section>
+      <section class="model-panel" aria-label="Writing provider and model">
+        <div class="model-top"><div><span class="section-kicker">WRITING ENGINE</span><h2>Episode writer</h2></div><button id="refresh-models" type="button" class="icon-button" title="Refresh providers" aria-label="Refresh providers">↻</button></div>
+        <p id="provider-status" class="model-meta">Checking writing providers…</p>
+        <label class="field-label" for="provider">Provider</label>
+        <select id="provider"><option value="lmstudio">LM Studio · local</option><option value="codex">Codex CLI · OpenAI</option><option value="claude">Claude CLI · Anthropic</option></select>
+        <div id="local-model-options">
+          <label class="field-label" for="model">Writing model</label>
+          <select id="model"><option value="">Loading LM Studio models…</option></select>
+          <p id="hardware-label" class="model-meta">Checking this computer and installed models…</p>
+          <button id="open-models" type="button" class="outline-button full-button">Find a model for this computer ↗</button>
+        </div>
+        <div id="cli-model-options" hidden>
+          <label class="field-label" for="cli-model-select">Writing model</label>
+          <select id="cli-model-select"><option value="">Loading suggestions…</option></select>
+          <input id="cli-model" aria-label="Custom model ID" autocomplete="off" spellcheck="false" placeholder="Enter a custom model ID" hidden>
+          <p class="model-meta model-choice-note">Suggested models are shown here; access is checked by your CLI when drafting.</p>
+          <div id="effort-row"><label class="field-label" for="effort">Codex effort</label><select id="effort"><option value="low">Low · faster</option><option value="medium" selected>Medium · balanced</option><option value="high">High · deeper</option><option value="xhigh">Xhigh · slowest</option><option value="max">Max · most reasoning</option></select></div>
+          <p class="model-meta provider-note">Uses your CLI sign-in. Notes and research excerpts are sent to the selected provider. Subscription access and limits depend on your account; API key sign-ins may incur charges. <a id="cli-setup" href="#">CLI setup ↗</a></p>
+        </div>
+        <div class="model-bottom"><span class="signal-dot"></span><span>Voice generation stays on this computer</span></div>
+      </section>
+    </main>
+    <section id="output" class="output" aria-live="polite">
+      <div class="output-icon" aria-hidden="true">♫</div>
+      <div class="output-body"><strong id="status-title">Ready when you are</strong><p id="status-detail">Finished MP3s save to your Music folder.</p></div>
+      <div id="player-wrap" class="player-wrap" hidden><audio id="player" controls preload="metadata"></audio><button id="reveal" type="button" class="text-button">Show file ↗</button></div>
+      <div class="output-tail">LOCAL KOKORO AUDIO</div>
+    </section>
+  </div>
+  <dialog id="models-dialog" class="studio-dialog" aria-label="Recommended LM Studio models">
+    <div class="dialog-head"><div><span class="section-kicker">LM STUDIO</span><h2>Find a writing model</h2></div><button type="button" class="icon-button dialog-close" data-close-dialog aria-label="Close">×</button></div>
+    <p class="dialog-intro">Recommendations reflect this computer’s memory and available disk space. Actual load requirements vary.</p>
+    <div id="recommendations" class="recommendations" aria-label="Recommended models"></div>
+    <div class="model-download"><label class="field-label" for="catalog-id">Download any LM Studio model</label><div class="inline-input"><input id="catalog-id" placeholder="publisher/model-id"><button id="download-model" type="button" class="primary-button">Download</button></div></div>
+    <p id="download-status" class="model-meta" aria-live="polite">Downloads stay in LM Studio. <button id="browse-catalog" type="button" class="text-button">Browse model catalog ↗</button></p>
+  </dialog>
+  <dialog id="sources-dialog" class="studio-dialog compact-dialog" aria-label="Research used">
+    <div class="dialog-head"><div><span class="section-kicker">EPISODE SOURCES</span><h2>Research used</h2></div><button type="button" class="icon-button dialog-close" data-close-dialog aria-label="Close">×</button></div>
+    <section id="sources-panel" hidden><ul id="sources-list"></ul><p id="research-warnings"></p></section>
+  </dialog>
+  <script type="module" src="renderer.mjs"></script>
+</body>
+</html>
