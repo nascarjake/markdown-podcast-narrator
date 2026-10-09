@@ -123,7 +123,7 @@ app.whenReady().then(() => {
       }
       report(input.provider === 'codex' ? 'Writing with Codex CLI…' : input.provider === 'claude' ? 'Writing with Claude CLI…' : 'Loading the LM Studio model and writing the two-host script…');
       const { writeEpisode } = await episode();
-      const result = await writeEpisode({ provider: input.provider || 'lmstudio', model: input.model, effort: input.effort, notes: input.notes, sources });
+      const result = await writeEpisode({ provider: input.provider || 'lmstudio', model: input.model, effort: input.effort, notes: input.notes, sources, onProgress: report });
       return { ...result, sources: sources.map(({ id, title, location, kind }) => ({ id, title, location, kind })), warnings };
     } finally { busy = false; }
   });
@@ -138,7 +138,7 @@ app.whenReady().then(() => {
     if (!voices.includes(input.voiceA) || !voices.includes(input.voiceB)) {
       throw new Error('Choose available voices for both hosts.');
     }
-    if (input.segments && (!Array.isArray(input.segments) || input.segments.length > 80 || input.segments.some((part) => !['A', 'B'].includes(part.speaker) || typeof part.text !== 'string' || part.text.length > 3000))) throw new Error('The dialogue is too long or malformed.');
+    if (input.segments && (!Array.isArray(input.segments) || input.segments.length > 160 || input.segments.some((part) => !['A', 'B'].includes(part.speaker) || typeof part.text !== 'string' || part.text.length > 3000))) throw new Error('The dialogue is too long or malformed.');
     const ffmpegPath = findFfmpeg();
     busy = true;
     const jobId = ++nextJob;

@@ -157,7 +157,9 @@ async function createDraft() {
   titleWasEdited = true;
   $('#source-label').textContent = `Two-host draft from ${provider.options[provider.selectedIndex].textContent}`;
   countWords(); showSources(result.sources, result.warnings);
-  showStatus('Conversation ready to review', 'Edit the hosts’ lines, then press Present & play.');
+  const wordCount = result.segments.map((part) => part.text).join(' ').trim().split(/\s+/).length;
+  const minutes = Math.max(1, Math.round(wordCount / 140));
+  showStatus('Conversation ready to review', `${result.conceptCount} ${result.conceptCount === 1 ? 'idea' : 'ideas'} explained · about ${minutes} min spoken. Edit the hosts’ lines, then press Present & play.`);
   return result.segments;
 }
 

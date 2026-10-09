@@ -53,6 +53,8 @@ For LM Studio, **Find a model for this computer** shows three suggestions with e
 5. Press **Present & play**. The app renders and saves the MP3, then starts playback in the bottom player. If your notes are not already dialogue, **Present & play** drafts first.
 6. Use **Show file** in the player to reveal the saved MP3. Output goes to your operating system's Music folder under `Markdown Podcast Narrator`.
 
+The writer first identifies the distinct ideas that need explaining, then builds the conversation in sections. It budgets roughly 180 spoken words per substantial idea, plus an opening and close: three ideas target about 620 words, while ten target about 1,880. Actual length depends on the source material and the selected model. Each section aims for familiar language, a useful example, and a natural question from the other host. Longer episodes take more drafting time and may use more of a CLI provider's allowance.
+
 For a straightforward spoken reading, uncheck **Two-host conversation**, choose Host A's voice, and press **Present & play**. This parses headings, paragraphs, bullets, and links into speakable text without calling a writing provider.
 
 ### Research options

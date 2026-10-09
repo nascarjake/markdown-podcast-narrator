@@ -77,7 +77,7 @@ function run(binary, args, input, cwd, timeoutMs = 300_000) {
   });
 }
 
-export async function runCliEpisode({ provider, model, effort = 'medium', prompt, binaryOverride }) {
+export async function runCliStructured({ provider, model, effort = 'medium', prompt, schema, binaryOverride }) {
   if (!['codex', 'claude'].includes(provider)) throw new Error('Unknown writing provider.');
   if (typeof model !== 'string' || !/^[a-zA-Z0-9][a-zA-Z0-9._:-]{0,99}$/.test(model)) throw new Error('Enter a valid model name.');
   if (provider === 'codex' && !CODEX_EFFORTS.includes(effort)) throw new Error('Choose a supported Codex effort level.');
@@ -88,12 +88,12 @@ export async function runCliEpisode({ provider, model, effort = 'medium', prompt
     if (provider === 'codex') {
       const schemaFile = path.join(cwd, 'schema.json');
       const answerFile = path.join(cwd, 'episode.json');
-      await writeFile(schemaFile, JSON.stringify(EPISODE_SCHEMA));
+      await writeFile(schemaFile, JSON.stringify(schema));
       const args = ['-a', 'never', 'exec', '--ignore-user-config', '--ephemeral', '--skip-git-repo-check', '--sandbox', 'read-only', '--model', model, '--config', `model_reasoning_effort=${effort}`, '--output-schema', schemaFile, '--output-last-message', answerFile, '-'];
       await run(binary, args, prompt, cwd);
       return await readFile(answerFile, 'utf8');
     }
-    const args = ['--safe-mode', '-p', 'Write the requested podcast episode from the piped instructions.', '--model', model, '--output-format', 'json', '--json-schema', JSON.stringify(EPISODE_SCHEMA), '--no-session-persistence', '--tools', '', '--disallowedTools', '*'];
+    const args = ['--safe-mode', '-p', 'Follow the piped podcast production instructions and return the requested JSON.', '--model', model, '--output-format', 'json', '--json-schema', JSON.stringify(schema), '--no-session-persistence', '--tools', '', '--disallowedTools', '*'];
     const { stdout } = await run(binary, args, prompt, cwd);
     const result = JSON.parse(stdout);
     if (result.is_error) throw new Error(result.result || 'Claude could not draft the episode.');
@@ -101,4 +101,8 @@ export async function runCliEpisode({ provider, model, effort = 'medium', prompt
   } finally {
     await rm(cwd, { recursive: true, force: true });
   }
+}
+
+export function runCliEpisode(options) {
+  return runCliStructured({ ...options, schema: EPISODE_SCHEMA });
 }
